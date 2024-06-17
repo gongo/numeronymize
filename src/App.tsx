@@ -51,13 +51,13 @@ const App: React.FC = () => {
       <StyledBase padding="S">
         <FormControl
           title="Enter the word you want to represent with a numeronym."
-          helpMessage="alphanumeric characters and spaces only"
-          errorMessages={errors.word && 'Non-alphanumeric characters have been entered.'}
+          helpMessage="alphabetic characters and spaces only"
+          errorMessages={errors.word && 'Non-alphabetic characters have been entered.'}
         >
           <Input
             type="text"
             {...register('word', {
-              pattern: /^[a-zA-Z0-9\s]*$/,
+              pattern: /^[a-zA-Z\s]*$/,
             })}
           />
         </FormControl>
