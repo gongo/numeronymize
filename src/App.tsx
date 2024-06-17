@@ -1,6 +1,17 @@
 import { ReactNode } from 'react'
 import { useForm, useWatch, Control } from 'react-hook-form'
-import { defaultSpacing, Base, Center, FormControl, Heading, Input, defaultBreakpoint } from 'smarthr-ui'
+import {
+  defaultSpacing,
+  Base,
+  Center,
+  FaArrowDownIcon,
+  FaXmarkIcon,
+  FormControl,
+  Heading,
+  Input,
+  Text,
+  defaultBreakpoint,
+} from 'smarthr-ui'
 import styled from 'styled-components'
 
 import { numeronymize } from './func'
@@ -15,7 +26,16 @@ const ResultForm: React.FC<{ control: Control<FormInputs> }> = ({ control }): Re
     name: 'word',
   })
 
-  return <div>{numeronymize(word)}</div>
+  return (
+    <>
+      <Heading type="blockTitle" aria-hidden>
+        Numeronym:
+      </Heading>
+      <ResultFormBody>
+        <Text weight="bold">{numeronymize(word)}</Text>
+      </ResultFormBody>
+    </>
+  )
 }
 
 const App: React.FC = () => {
@@ -42,7 +62,14 @@ const App: React.FC = () => {
           />
         </FormControl>
       </StyledBase>
-      <StyledBase padding="S">{!errors.word && <ResultForm control={control} />}</StyledBase>
+      <ProcessFlowArrowIcon alt="Numeronymized text shown below" />
+      {errors.word ? (
+        <NumeronymizeErrorIcon text="Unable to convert due to an error." color="DANGER" />
+      ) : (
+        <StyledBase padding="S">
+          <ResultForm control={control} />
+        </StyledBase>
+      )}
     </Center>
   )
 }
@@ -56,4 +83,16 @@ const StyledBase = styled(Base)`
   @media screen and (max-width: ${defaultBreakpoint.SP}px) {
     width: auto;
   }
+`
+
+const ProcessFlowArrowIcon = styled(FaArrowDownIcon)`
+  margin-top: ${defaultSpacing.S};
+`
+
+const NumeronymizeErrorIcon = styled(FaXmarkIcon)`
+  margin-top: ${defaultSpacing.S};
+`
+
+const ResultFormBody = styled.div`
+  padding: ${defaultSpacing.XS};
 `
