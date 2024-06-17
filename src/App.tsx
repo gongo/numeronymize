@@ -8,6 +8,8 @@ import {
   FormControl,
   Heading,
   Input,
+  PageHeading,
+  Section,
   Text,
   defaultBreakpoint,
   defaultSpacing,
@@ -27,14 +29,14 @@ const ResultForm: React.FC<{ control: Control<FormInputs> }> = ({ control }): Re
   })
 
   return (
-    <>
+    <Section>
       <Heading type="blockTitle" aria-hidden>
         Numeronym:
       </Heading>
       <ResultFormBody>
         <Text weight="bold">{numeronymize(word)}</Text>
       </ResultFormBody>
-    </>
+    </Section>
   )
 }
 
@@ -47,16 +49,19 @@ const App: React.FC = () => {
 
   return (
     <Center>
-      <Heading type="screenTitle">Numeronym Generator</Heading>
+      <PageHeading>Numeronym Generator</PageHeading>
       <StyledBase padding="S">
         <FormControl
           title="Enter the word you want to represent with a numeronym."
           helpMessage="alphabetic characters and spaces only"
           errorMessages={errors.word && 'Non-alphabetic characters have been entered.'}
         >
-          <Input {...register('word', {
+          <Input // eslint-disable-line smarthr/a11y-input-has-name-attribute
+            {...register('word', {
               pattern: /^[a-zA-Z\s]*$/,
-            })} type="text"/>
+            })}
+            type="text"
+          />
         </FormControl>
       </StyledBase>
       <ProcessFlowArrowIcon alt="Numeronymized text shown below" />
