@@ -1,7 +1,6 @@
 import { ReactNode } from 'react'
-import { useForm, useWatch, Control } from 'react-hook-form'
+import { Control, useForm, useWatch } from 'react-hook-form'
 import {
-  defaultSpacing,
   Base,
   Center,
   FaArrowDownIcon,
@@ -11,6 +10,7 @@ import {
   Input,
   Text,
   defaultBreakpoint,
+  defaultSpacing,
 } from 'smarthr-ui'
 import styled from 'styled-components'
 
@@ -54,12 +54,9 @@ const App: React.FC = () => {
           helpMessage="alphabetic characters and spaces only"
           errorMessages={errors.word && 'Non-alphabetic characters have been entered.'}
         >
-          <Input
-            type="text"
-            {...register('word', {
+          <Input {...register('word', {
               pattern: /^[a-zA-Z\s]*$/,
-            })}
-          />
+            })} type="text"/>
         </FormControl>
       </StyledBase>
       <ProcessFlowArrowIcon alt="Numeronymized text shown below" />

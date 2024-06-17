@@ -1,6 +1,7 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { createTheme, ThemeProvider } from 'smarthr-ui'
+import { ThemeProvider, createTheme } from 'smarthr-ui'
+
 import 'smarthr-ui/smarthr-ui.css'
 import App from './App.tsx'
 
