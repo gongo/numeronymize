@@ -22,7 +22,7 @@ interface FormInputs {
   word: string
 }
 
-const ResultForm: React.FC<{ control: Control<FormInputs> }> = ({ control }): ReactNode => {
+const ResultForm: React.FC<{ control: Control<FormInputs>; hasError: boolean }> = ({ control, hasError }): ReactNode => {
   const word = useWatch({
     control,
     name: 'word',
@@ -34,7 +34,11 @@ const ResultForm: React.FC<{ control: Control<FormInputs> }> = ({ control }): Re
         Numeronym:
       </Heading>
       <ResultFormBody>
-        <Text weight="bold">{numeronymize(word)}</Text>
+        {hasError ? (
+          <FaXmarkIcon text="Unable to convert due to an error." color="DANGER" />
+        ) : (
+          <Text weight="bold">{numeronymize(word)}</Text>
+        )}
       </ResultFormBody>
     </Section>
   )
@@ -65,13 +69,9 @@ const App: React.FC = () => {
         </FormControl>
       </StyledBase>
       <ProcessFlowArrowIcon alt="Numeronymized text shown below" />
-      {errors.word ? (
-        <NumeronymizeErrorIcon text="Unable to convert due to an error." color="DANGER" />
-      ) : (
-        <StyledBase padding="S">
-          <ResultForm control={control} />
-        </StyledBase>
-      )}
+      <StyledBase padding="S">
+        <ResultForm control={control} hasError={!!errors.word} />
+      </StyledBase>
     </Center>
   )
 }
@@ -83,15 +83,11 @@ const StyledBase = styled(Base)`
   width: 600px;
 
   @media screen and (max-width: ${defaultBreakpoint.SP}px) {
-    width: auto;
+    width: calc(100% - 48px);
   }
 `
 
 const ProcessFlowArrowIcon = styled(FaArrowDownIcon)`
-  margin-top: ${defaultSpacing.S};
-`
-
-const NumeronymizeErrorIcon = styled(FaXmarkIcon)`
   margin-top: ${defaultSpacing.S};
 `
 
